@@ -23,7 +23,7 @@
 
   <!-- GPS -->
   <!-- Parameters need to be configurable -->
-  <node name="gps_publisher" pkg="nmea_navsat_driver" type="nmea_serial_driver">
+  <node name="gps_publisher" pkg="nmea_navsat_driver" type="nmea_serial_driver" respawn="true">
       <param name="_port" value="/dev/ttyUSB0"/>
       <param name="_baud" value="9600"/>
   </node>
