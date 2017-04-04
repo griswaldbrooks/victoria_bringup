@@ -88,6 +88,7 @@ install:
   # Bring in victoria dependencies.
   - cd ~/catkin_ws/src
   - git clone https://github.com/victoriarobotics/victoria_perception.git
+  - git clone https://github.com/victoriarobotics/victoria_navigation.git
   - git clone https://github.com/victoriarobotics/victoria_ros.git
   - git clone https://github.com/victoriarobotics/victoria_base.git
   - git clone https://github.com/victoriarobotics/victoria_msgs.git
