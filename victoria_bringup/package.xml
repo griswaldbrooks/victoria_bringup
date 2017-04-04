@@ -53,6 +53,8 @@
   <exec_depend>victoria_perception</exec_depend>
   <exec_depend>victoria_base</exec_depend>
   <exec_depend>realsense_camera</exec_depend>
+  <exec_depend>nmea_navsat_driver</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
   <depend>victoria_navigation</depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
