@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/victoriarobotics/victoria_bringup.svg?branch=master)](https://travis-ci.org/victoriarobotics/victoria_bringup)
 # victoria_bringup
 Scripts to run when the system is turned on.
 
