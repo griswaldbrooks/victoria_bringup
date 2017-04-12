@@ -4,7 +4,7 @@
 
   <!-- Odometry -->
 
-  <arg name="laser_enabled" default="false"/>
+  <arg name="laser_enabled" default="true"/>
   <arg name="kinect_enabled" default="true"/>
   <arg name="robot_initial_pose" default="0 0 0"/>
 
@@ -25,12 +25,14 @@
   <node name="gps_publisher" pkg="gpsd_client" type="gpsd_client" respawn="true"/>
 
   <!-- R200 Camera -->
-  <include file="$(find realsense_camera)/launch/r200_nodelet_default.launch" />
-
-  <!-- Laser -->
-
-  <!-- Laser -->
+  <include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/>
   <include file="$(find victoria_navigation)/launch/depth_to_laserscan.launch" />
+
+  <!-- Laser -->
+  <node name="urg_publisher" pkg="urg_node" type="urg_node">
+    <param name="serial_port" value="/dev/ttyACM1"/>
+    <param name="frame_id" value="/laser_link"/>
+  </node>
 
   <!-- Teleop -->
 
