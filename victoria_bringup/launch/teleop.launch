@@ -1,0 +1,53 @@
+<launch>
+
+  <!-- Calibration -->
+
+  <!-- Odometry -->
+
+  <arg name="laser_enabled" default="true"/>
+  <arg name="kinect_enabled" default="true"/>
+  <arg name="robot_initial_pose" default="0 0 0"/>
+
+  <!-- URDF -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find victoria_description)/robots/victoria.xacro'
+    laser_enabled:=$(arg laser_enabled)
+    kinect_enabled:=$(arg kinect_enabled)" />
+
+
+  <!-- Base/Platform -->
+  <include file="$(find victoria_base)/launch/victoria_base.launch" />
+  
+  <!-- Joint State -> TF -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />  
+
+  <!-- GPS -->
+  <node name="gps_serial_reader" pkg="nmea_navsat_driver" type="nmea_topic_serial_reader" respawn="true">
+      <param name="port" value="/dev/ttyUSB0"/>
+      <param name="baud" value="9600"/>
+      <param name="frame_id" value="gps"/>
+  </node>
+  <node name="gps_publisher" pkg="nmea_navsat_driver" type="nmea_topic_driver" respawn="true"/>
+
+  <!-- R200 Camera -->
+  <rosparam param="/camera/driver/r200_lr_auto_exposure_enabled">0</rosparam>
+  <rosparam param="/camera/driver/r200_lr_gain">100</rosparam>
+  <rosparam param="/camera/driver/r200_lr_exposure">20</rosparam>
+  <rosparam param="/camera/driver/r200_emmiter_enabled">0</rosparam>
+  <include file="$(find realsense_camera)/launch/r200_nodelet_default.launch"/>
+  <include file="$(find victoria_navigation)/launch/depth_to_laserscan.launch" />
+
+  <!-- Laser -->
+  <node name="urg_publisher" pkg="urg_node" type="urg_node">
+    <param name="serial_port" value="/dev/ttyACM1"/>
+    <param name="frame_id" value="laser_link"/>
+  </node>
+
+  <!-- Teleop -->
+
+  <!-- Android App -->
+  <include file="$(find victoria_perception)/launch/android_image_pub.launch" />
+
+  <!-- Software Runstop -->
+
+</launch>
